@@ -10,13 +10,13 @@ import { useLoginUser } from "../../hooks/useLoginUser";
 export const UserManagement: FC = memo(() => {
   const { getUsers, loading, users } = useAllUsers();
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { getUser, user } = useSelectUsers();
+  const { onSelectUser, selectedUser } = useSelectUsers();
   const { loginUser } = useLoginUser();
   console.log(loginUser)
   useEffect(() => getUsers(), []);
 
   const onClickUser = useCallback((id: number) => {
-    getUser({id, users, onOpen});
+    onSelectUser({id, users, onOpen});
   }, []);
   return (
     <>
@@ -39,7 +39,7 @@ export const UserManagement: FC = memo(() => {
           ))}
         </Wrap>
       ) }
-      <UserDetailModal isOpen={isOpen} onClose={onClose} user={user} />
+      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} />
     </>
   )
 });
