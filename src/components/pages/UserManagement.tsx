@@ -12,12 +12,11 @@ export const UserManagement: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { onSelectUser, selectedUser } = useSelectUsers();
   const { loginUser } = useLoginUser();
-  console.log(loginUser)
   useEffect(() => getUsers(), []);
 
   const onClickUser = useCallback((id: number) => {
     onSelectUser({id, users, onOpen});
-  }, []);
+  }, [users, selectedUser, onOpen]);
   return (
     <>
       { loading ? (
@@ -39,7 +38,7 @@ export const UserManagement: FC = memo(() => {
           ))}
         </Wrap>
       ) }
-      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} />
+      <UserDetailModal isOpen={isOpen} onClose={onClose} user={selectedUser} isAdmin={loginUser?.isAdmin} />
     </>
   )
 });
